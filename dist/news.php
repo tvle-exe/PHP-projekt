@@ -1,3 +1,4 @@
+<?php include "includes/db.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -22,7 +23,19 @@
 		<a href="gallery.php">Gallery</a>
 	</nav>
 	<main>
-		<div class="news">
+        <section class="news">
+        <?php $result = mysqli_query($conn, "SELECT * FROM news ORDER BY id DESC");
+
+        while ($row = mysqli_fetch_assoc($result)):
+        ?>
+        <br><br><br><br>
+        <article>
+            <h2 style="color:#f76f00"><?= htmlspecialchars($row['title']) ?></h2>
+            <p style="color:white"><?= nl2br(htmlspecialchars($row['content'])) ?></p>
+        </article>
+        <?php endwhile; ?>
+        
+		
             <div>
                 <a class="news__link" href="news_1.php"><img src="img/VEGITOGOGETA.jpg" alt="Vegito vs Gogeta, who wins?" title="Vegito and Gogeta"></a>
                 <h2 class="news__title"><a href="news_1.php">Vegito vs Gogeta, who wins?</a></h2>
@@ -57,7 +70,8 @@
                 <p class="news__p">The Angels of Dragon Ball Super serve as mentors for Gods of Destruction, teaching them to control the power of Destruction. <a href="news_5.html">More ...</a></p>
                 <p class="news__p"><time datetime="2021-07-24">24 July 2021</time></p>
             </div>
-        </div>
+        </section>
+    
 	
 	</main>
 <?php include "includes/footer.php"; ?>
