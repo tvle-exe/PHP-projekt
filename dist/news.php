@@ -39,7 +39,7 @@
             <div>
                 <a class="news__link" href="news_1.php"><img src="img/VEGITOGOGETA.jpg" alt="Vegito vs Gogeta, who wins?" title="Vegito and Gogeta"></a>
                 <h2 class="news__title"><a href="news_1.php">Vegito vs Gogeta, who wins?</a></h2>
-                <p class="news__p">While on the surface the two appear to be on equal footing, Gogeta is superior to Vegito for one very simple reason: <a href="news_1.html">More ...</a></p>
+                <p class="news__p">While on the surface the two appear to be on equal footing, Gogeta is superior to Vegito for one very simple reason: <a href="news_1.php">More ...</a></p>
                 <p class="news__p"><time datetime="2019-11-04">04 November 2019</time></p>
             </div>
             <hr>
@@ -60,14 +60,14 @@
             <div>
                 <a class="news__link" href="news_4.php"><img src="img/ZENO.jpg" alt="Is Zeno really the strongest character?" title="Zeno's power"></a>
                 <h2 class="news__title"><a href="news_4.php">Is Zeno really the strongest?</a></h2>
-                <p class="news__p">Ever since Dragon Ball, Goku and the Z Fighters have met omnipotent beings wielding the power of the gods, with escalating strength. <a href="news_4.html">More ...</a></p>
+                <p class="news__p">Ever since Dragon Ball, Goku and the Z Fighters have met omnipotent beings wielding the power of the gods, with escalating strength. <a href="news_4.php">More ...</a></p>
                 <p class="news__p"><time datetime="2019-12-03">03 December 2019</time></p>
             </div>
             <hr>
             <div>
                 <a class="news__link" href="news_5.php"><img src="img/ANGELS.png" alt="Why angels don't fight?" title="Angels"></a>
                 <h2 class="news__title"><a href="news_5.php">Why angels don't fight?</a></h2>
-                <p class="news__p">The Angels of Dragon Ball Super serve as mentors for Gods of Destruction, teaching them to control the power of Destruction. <a href="news_5.html">More ...</a></p>
+                <p class="news__p">The Angels of Dragon Ball Super serve as mentors for Gods of Destruction, teaching them to control the power of Destruction. <a href="news_5.php">More ...</a></p>
                 <p class="news__p"><time datetime="2021-07-24">24 July 2021</time></p>
             </div>
         </section>
