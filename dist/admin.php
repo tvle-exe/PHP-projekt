@@ -1,4 +1,29 @@
 <?php
+session_start();
+
+if (!isset($_SESSION["user"])) {
+    header("Location: login.php");
+    exit();
+}
+
+$xmlFile = __DIR__ . "/data/users.xml";
+$xml = simplexml_load_file($xmlFile);
+
+if (isset($_GET["delete"])) {
+    $deleteUsername = $_GET["delete"];
+
+    for ($i = 0; $i < count($xml->user); $i++) {
+        if ((string)$xml->user[$i]->username === $deleteUsername) {
+            unset($xml->user[$i]);
+            $xml->asXML($xmlFile);
+            header("Location: admin.php");
+            exit();
+        }
+    }
+}
+?>
+
+<?php
 include "includes/db.php";
 
 /* CREATE */
@@ -54,7 +79,7 @@ if (isset($_GET['edit'])) {
 <?php include "includes/header.php"; ?>
 
 <main>
-    <br><br><br>
+    <br><br><br><br><br>
     <h1>Admin sučelje – Vijesti</h1>
 
     <!-- CREATE / UPDATE FORMA -->
@@ -106,9 +131,43 @@ if (isset($_GET['edit'])) {
         </tr>
         <?php endwhile; ?>
     </table>
+
+
+
+    <h2>Registrirani korisnici</h2>
+
+    <table border="1" cellpadding="8" style="width:100%">
+        <tr>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Akcija</th>
+        </tr>
+
+        <?php foreach ($xml->user as $user): ?>
+            <tr>
+                <td><?= htmlspecialchars($user->ime) ?></td>
+                <td><?= htmlspecialchars($user->prezime) ?></td>
+                <td><?= htmlspecialchars($user->email) ?></td>
+                <td><?= htmlspecialchars($user->username) ?></td>
+                <td>
+                    <?php if ($_SESSION["user"] !== (string)$user->username): ?>
+                        <a href="admin.php?delete=<?= $user->username ?>"
+                        onclick="return confirm('Obrisati korisnika?');">
+                        Obriši
+                        </a>
+                    <?php else: ?>
+                        —
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+
 </main>
 
-<?php include "includes/footer.php"; ?>
+
 
 </body>
 </html>

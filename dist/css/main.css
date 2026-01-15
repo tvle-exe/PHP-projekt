@@ -414,6 +414,12 @@ header .nav .menu-nav__item--link::after {
   color: lime;
 }
 
+.auth-links {
+    display: flex;
+    gap: 15px;
+}
+
+
 body {
   text-align: center;
 }
@@ -599,4 +605,12 @@ footer {
   text-align: right;
   padding: 1rem;
 }
-/*# sourceMappingURL=main.css.map */
+
+.menu-nav__item {
+    display: inline-block;
+    padding: 0 2rem;
+}
+
+.menu-nav__item.auth {
+    padding: 0 0.6rem;
+}

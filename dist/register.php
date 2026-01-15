@@ -1,27 +1,49 @@
-<?php 
-include "includes/db.php";
+<?php
+session_start();
+?>
 
+<?php
 $message = "";
+
+$xmlFile = "data/users.xml";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    // Sigurno čitanje POST podataka
     $ime      = $_POST["firstname"] ?? "";
     $prezime  = $_POST["lastname"] ?? "";
     $email    = $_POST["email"] ?? "";
     $username = $_POST["username"] ?? "";
-    $password = password_hash($_POST["password"] ?? "", PASSWORD_DEFAULT);
+    $password = $_POST["password"] ?? "";
 
-    // Provjera da obavezna polja nisu prazna
     if ($ime && $prezime && $email && $username && $password) {
 
-        $sql = "INSERT INTO users (ime, prezime, email, username, password)
-                VALUES ('$ime', '$prezime', '$email', '$username', '$password')";
+        $xml = simplexml_load_file($xmlFile);
 
-        if ($conn->query($sql)) {
-            $message = "Registracija uspješna!";
-        } else {
-            $message = "Greška pri registraciji.";
+        // Provjera postoji li korisnik
+        foreach ($xml->user as $user) {
+            if ((string)$user->username === $username) {
+                $message = "Korisničko ime već postoji.";
+                break;
+            }
+        }
+
+        if (!$message) {
+            $newUser = $xml->addChild("user");
+            $newUser->addChild("ime", $ime);
+            $newUser->addChild("prezime", $prezime);
+            $newUser->addChild("email", $email);
+            $newUser->addChild("username", $username);
+            $newUser->addChild(
+                "password",
+                password_hash($password, PASSWORD_DEFAULT)
+            );
+
+            $xml->asXML($xmlFile);
+
+			$_SESSION["user"] = $username;
+
+			header("Location: home.php");
+			exit();
         }
 
     } else {
@@ -29,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="hr">

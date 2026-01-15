@@ -1,31 +1,40 @@
 <?php
 session_start();
-include "includes/db.php";
 
 $message = "";
+$xmlFile = "data/users.xml";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $sql = "SELECT * FROM users WHERE username='$username'";
-    $result = $conn->query($sql);
+    $username = $_POST["username"] ?? "";
+    $password = $_POST["password"] ?? "";
 
-    if ($result->num_rows == 1) {
-        $user = $result->fetch_assoc();
+    if (file_exists($xmlFile)) {
+        $xml = simplexml_load_file($xmlFile);
 
-        if (password_verify($password, $user["password"])) {
-            $_SESSION["user"] = $user["username"];
-            header("Location: admin.php");
-            exit();
-        } else {
-            $message = "Pogrešna lozinka.";
+        foreach ($xml->user as $user) {
+            if ((string)$user->username === $username) {
+
+                if (password_verify($password, (string)$user->password)) {
+                    $_SESSION["user"] = $username;
+                    header("Location: admin.php");
+                    exit();
+                } else {
+                    $message = "Pogrešna lozinka.";
+                }
+                break;
+            }
+        }
+
+        if (!$message) {
+            $message = "Korisnik ne postoji.";
         }
     } else {
-        $message = "Korisnik ne postoji.";
+        $message = "XML datoteka ne postoji.";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="hr">
